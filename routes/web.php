@@ -30,6 +30,10 @@ $router->get('/dipatchSyncJob', [
 $router->get('/lisTtest', [
     'as' => 'lisTtest', 'uses' => 'OrderController@lisTtest'
 ]);
+$router->post('/getCsvReport', [
+    'as' => 'getCsvReport', 'uses' => 'ExportOrder@getcsvreport'
+]);
+
 
 
 

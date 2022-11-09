@@ -235,7 +235,39 @@ function Calculate_coporate_service_tax($baseprice, $fk_corporate_id) {
     return $service;
 } 
 
+function getServiceType($id_order){
+    $order_details = Order::where(['id_order' => $id_order])->first();
+    if($order_details){
+       if($order_details->order_transfer == 1){
+         if($order_details->service_type == 1){
+           return 'To City';
+         }else{
+           return 'From City';
+         }
+       }else{
+         if($order_details->service_type == 1){
+           return 'To Airport';
+         }else{
+           return 'From Airport';
+         }
+       }
+    }
 
+ }
+function getAmountCollected($id){
+    $id = ($id) ? $id : 0;
+    $orders = Order::select(['express_extra_amount', 'amount_paid'])->where(['id_order'=>$id])->first();
+   //print_r($region['region_name']);exit;
+    if(!empty($orders))
+    {
+        $express_extra_amount = $orders['express_extra_amount'];
+        $amount_collected = $orders['express_extra_amount'] + $orders['amount_paid'] + $orders['express_extra_amount'] * (12/100);
+        return $amount_collected;  
+    }else
+    {
+        return "-"; 
+    }
+}
 function get_email_template($id = '')
 {
     $email_template = MeEmailTemplate::whereIn('email_template_id', $id)->where('email_template_status', 1)->get();
