@@ -18,7 +18,7 @@ class ExportOrder extends Controller
     }
     
     public function getcsvreport(Request $postdata){
-
+        echo '<pre>'; print_r($_SERVER); exit;
         $final_array =array();
         $fromDate=$postdata['start_date'].'00:00:00';
         $toDate=$postdata['end_date'].'23:59:59';
@@ -155,7 +155,7 @@ class ExportOrder extends Controller
             } 
                        
             $new_array1 = array(
-                'corporate_namdelivere'=>$val['corporate']['name'],
+                'corporate_name'=>$val['corporate']['name'],
                 'transfer_type'=>$val['order_type_str'],
                 'terminal_type'=>$terminal,
                 'customer_name'=>$val['customer_name'],
@@ -212,8 +212,11 @@ class ExportOrder extends Controller
 
 
         // Path to the project's root folder    
-        // Path to the 'storage/app' folder    
-        $path = storage_path('app/test06.csv');
+        // Path to the 'storage/app' folder   
+       
+        $filename= app_path().'/storage/app/OrderExport'.date('y-m-d h:i:s').'.csv'; 
+        
+        $path = $filename;
         $csv = fopen($path , 'w');
         fputcsv($csv, $final_array);
         foreach ($new_array as $x =>$result){

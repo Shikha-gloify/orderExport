@@ -12,6 +12,9 @@ use App\OrderItems;
 use App\OrderHistory;
 use App\SuperSubscriber;
 use App\ThirdpartyCorporate;
+use App\DeliveryServiceType;
+
+
 use Illuminate\Support\Facades\Cache;
 
 
@@ -175,12 +178,12 @@ function getluggagecount($id_order)
 
  function getDeliveryName($id, $corporate_id){
     $dservice_type = ($id) ? $id : 0;
-    $delivery_service = \App\DeliveryServiceType::where(['id_delivery_type'=>$dservice_type])->get();
+    $delivery_service = DeliveryServiceType::where(['id_delivery_type'=>$dservice_type])->first();
     
     if($corporate_id){
         if($corporate_id == 19 || $corporate_id == 20 || $corporate_id == 30 || $corporate_id == 31 || $corporate_id == 214)
         {
-            return $delivery_service['0']['delivery_category']; 
+            return $delivery_service['delivery_category']; 
         }else
         {
             return (($dservice_type == 1) ? "Repairs" :
@@ -268,10 +271,6 @@ function getAmountCollected($id){
         return "-"; 
     }
 }
-function get_email_template($id = '')
-{
-    $email_template = MeEmailTemplate::whereIn('email_template_id', $id)->where('email_template_status', 1)->get();
-    return $email_template;
-}
+
 
 
