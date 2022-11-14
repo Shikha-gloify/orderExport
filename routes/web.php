@@ -10,8 +10,6 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
-
-
 $router->get('/getorders', [
     'as' => 'getorders', 'uses' => 'OrderController@list'
 ]);
@@ -30,8 +28,11 @@ $router->get('/dipatchSyncJob', [
 $router->get('/lisTtest', [
     'as' => 'lisTtest', 'uses' => 'OrderController@lisTtest'
 ]);
-$router->post('/getCsvReport', [
-    'as' => 'getCsvReport', 'uses' => 'ExportOrder@getcsvreport'
+$router->post('/getcsvdata', [
+    'as' => 'getcsvdata', 'uses' => 'ExportOrder@getcsvdata'
+]);
+$router->get('/downloadcsvfile/{ext_id}', [
+    'as' => 'downloadcsvfile', 'uses' => 'ExportOrder@downloadcsvfile'
 ]);
 
 

@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Order;
 use App\Customer;
 use App\CorporateDetails;
-use App\Jobs\ExampleJob;
+use App\Jobs\Orderlistjob;
 use Routes\QueueMonitorRoutes;
 
 use Illuminate\Support\Facades\Cache;
@@ -24,7 +24,7 @@ class OrderController extends Controller
 
     public function dipatchSyncJob(){
 
-        dispatch(new ExampleJob);
+        dispatch(new Orderlistjob);
 
         return "started";
     }
@@ -270,11 +270,8 @@ class OrderController extends Controller
 
     public function getCacheData()
     {
-
         $data = Cache::get('queue_worker');
-
-       return $data;
-       
+        return $data;
     }
 
     //

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+//use Illuminate\Http\Response;
 use App\Order;
+use Illuminate\Support\Facades\Response;
+use App\Jobs\Exportjob;
+use Routes\QueueMonitorRoutes;
+use Log;
 
 class ExportOrder extends Controller
 {
@@ -16,9 +20,24 @@ class ExportOrder extends Controller
     {
         //
     }
+    public function getcsvdata(Request $postdata){
+        $rturn_array =array();
+        $today =date('Y-m-d');
+        if($postdata['start_date'] > $today){
+            return $rturn_array =array('status'=>'201','msg' => "start date should not be  greater than today");
+        }
+        if($postdata['end_date'] > $today){
+            return $rturn_array =array('status'=>'201','msg'=> "end date should not be  greater than today");
+            
+        }
+       
+        dispatch(new Exportjob($postdata->all()));
+
+        return $rturn_array =array('status'=>'200','msg' => "Import has been Started");
+    }
     
     public function getcsvreport(Request $postdata){
-        echo '<pre>'; print_r($_SERVER); exit;
+       
         $final_array =array();
         $fromDate=$postdata['start_date'].'00:00:00';
         $toDate=$postdata['end_date'].'23:59:59';
@@ -214,7 +233,7 @@ class ExportOrder extends Controller
         // Path to the project's root folder    
         // Path to the 'storage/app' folder   
        
-        $filename= app_path().'/storage/app/OrderExport'.date('y-m-d h:i:s').'.csv'; 
+        $filename = base_path().'/storage/app/OrderExport'.time().'.csv'; 
         
         $path = $filename;
         $csv = fopen($path , 'w');
@@ -223,10 +242,31 @@ class ExportOrder extends Controller
             fputcsv($csv, $result);
         }
 
-        fclose($csv);
-        return response()->json($path, 201);
-      //  return $csv;
+        $close = fclose($csv);
+
+        if($close) {
+
+            // Trigger Event to check if file generated completely.
+            // Trigger Email after fclose with link $filename.
+        }
+
         
+        
+
+
+        return response()->json($path, 201);
+        
+        
+    }
+    public function downloadcsvfile($ext_id){
+        //return response()->download($path);
+        $filename =$ext_id.'.csv';
+        
+        $path = storage_path().'/'.'app'.'/'.$filename;
+        if (file_exists($path)) {
+            return Response::download($path);
+        }
+
     }
     
 }

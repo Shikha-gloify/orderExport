@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Cache;
 use App\Helpers\CommonHelper;
 use Log;
 
-class ExampleJob extends Job
+class Orderlistjob extends Job
 {
     /**
      * Create a new job instance.
@@ -31,8 +31,6 @@ class ExampleJob extends Job
         try {
             
             $data = setordercache();
-            Log::info('orderquestarted ' . $data['id_order']);
-
             Cache::set('queue_worker', $data);
         }
         catch(Exception $e){
