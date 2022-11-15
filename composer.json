@@ -5,14 +5,10 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^7.2.5",
-        "aws/aws-sdk-php": "3.0",
+        "php": "^7.0",
         "illuminate/redis": "^7.30",
         "laravel/lumen-framework": "^7.0",
-        "laravelista/lumen-vendor-publish": "^7.0",
-        "pda/pheanstalk": "3.0",
-        "predis/predis": "^2.0",
-        "romanzipp/laravel-queue-monitor": "^2.3"
+        "predis/predis": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",

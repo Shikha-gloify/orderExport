@@ -10,6 +10,9 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+Route::get('/', function () {
+    return view('welcome');
+});
 $router->get('/getorders', [
     'as' => 'getorders', 'uses' => 'OrderController@list'
 ]);

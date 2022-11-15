@@ -22,10 +22,14 @@ class AppServiceProvider extends ServiceProvider
 
         Queue::after(function (JobProcessed $event){
 
-            $id = Cache::get('job_id');
-            $ext = TableEport::find($id);
-            $ext->status = '1';
-            $ext->update();
+            if (Cache::has('job_id')) {
+                $id = Cache::get('job_id');
+                $ext = TableEport::find($id);
+                $ext->status = '1';
+                $ext->update();
+                Cache::forget('job_id');
+                Log::info('export table update');
+            }
 
             Log::info('job processed');
         });
