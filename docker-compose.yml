@@ -1,0 +1,25 @@
+
+version: '3'
+
+services:
+# Backend / PHP
+  app:
+    image: myphpapp
+    build: .
+    volumes:
+      - ./public:/usr/src/phpapp/public
+      - ./storage:/usr/src/phpapp/storage
+      - ./laravel-worker:/etc/supervisor/conf.d/laravel-worker.conf
+    restart: always
+    # ports:
+      # - "9000:9000"
+    network_mode: host 
+# Redis
+  redis:
+    image: redis:latest
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - ./redis-conf/redis.conf:/etc/redis-conf/redis.conf
+    network_mode: host   
+

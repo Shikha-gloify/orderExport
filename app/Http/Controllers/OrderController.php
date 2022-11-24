@@ -7,6 +7,9 @@ use App\Customer;
 use App\CorporateDetails;
 use App\Jobs\Orderlistjob;
 use Routes\QueueMonitorRoutes;
+use App\TableEport;
+use Log;;
+
 
 use Illuminate\Support\Facades\Cache;
 
@@ -100,8 +103,21 @@ class OrderController extends Controller
     }
   
     public function lisTtest(){
-       
-        $data = setordercache();
+        $thing = TableEport::create(
+            [
+            'start_date' =>'2021-11-11',
+            'end_date' => '2021-11-31',
+            'status' =>  '0',
+            'path' => "ggfdffdgfgff.csv",
+            ]);
+
+        //$data = Order::all();
+        $data = Order::with('customer','corporate','cityname','vehical','payment','spot','metadata','airport','slot','confirmation','porterx','related')
+        //->where(['deleted_status' => 0])->orderBy('id_order','desc')->get();
+        ->where(['deleted_status' => 0])->orderBy('id_order','desc')->paginate(10);
+        Log::info('chec_status' .'ddd');
+        // Log::info('job_success ' . $path);
+        
         return response()->json($data, 201);
 
         //return  $resutl;

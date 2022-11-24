@@ -30,13 +30,13 @@ class ExportOrder extends Controller
             return $rturn_array =array('status'=>'201','msg'=> "end date should not be  greater than today");
             
         }
-       
+        Log::info('hitting exportjob' .'csv');
         dispatch(new Exportjob($postdata->all()));
 
         return $rturn_array =array('status'=>'200','msg' => "Import has been Started");
     }
     
-    public function getcsvreport(Request $postdata){
+    public function getcsvreporta(Request $postdata){
        
         $final_array =array();
         $fromDate=$postdata['start_date'].'00:00:00';

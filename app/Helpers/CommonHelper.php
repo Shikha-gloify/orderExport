@@ -1,5 +1,6 @@
 <?php
-//namespace App\Helpers;
+namespace App\Helpers;
+
 
 use App\Order;
 use App\Customer;
@@ -14,16 +15,18 @@ use App\SuperSubscriber;
 use App\ThirdpartyCorporate;
 use App\DeliveryServiceType;
 use App\State;
-
-
-
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+
+//use Log;
+
 
 
 
 function democheck(){
     $data = Order::where(['deleted_status' => 0])->orderBy('id_order','desc')->offset(0)->limit('1')->get();
     //$data="checkkkkkkkkkkk";
+    log::info('commonhelper');
     return  $data;
 }
 function setordercache(){
@@ -275,9 +278,8 @@ function getAmountCollected($id){
 
 // export part for csv
 function getcsvreport($postdata){
-    // echo 'check';
-    // print_r($postdata);
-    // die;
+    Log::info('commonhelper' ,$postdata);
+
        
     $final_array =array();
     $fromDate=$postdata['start_date'].'00:00:00';

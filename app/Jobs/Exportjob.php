@@ -24,10 +24,10 @@ class Exportjob extends Job
     public function __construct($postdata)
     {
         $this->postdata = $postdata;
-        
+        Log::info('exportjobdata' ,$this->postdata);
 
     }
-
+   
     /**
      * Execute the job.
      *debug 
@@ -37,6 +37,8 @@ class Exportjob extends Job
     {
         
         try {
+            
+            Log::info('callfunction',$this->postdata);
             $result = getcsvreport($this->postdata);
             $thing = TableEport::create(
             [
@@ -46,7 +48,7 @@ class Exportjob extends Job
             'path' =>  $result['path'],
             ]);
             Cache::set('job_id', $thing->idorderexport);
-            Log::info('checkreturn',$result);
+            Log::info('checkreturn' .$result);
           
         }
         catch(Exception $e){
