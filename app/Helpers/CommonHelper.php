@@ -1,5 +1,5 @@
 <?php
-namespace App\Helpers;
+//namespace App\Helpers;
 
 
 use App\Order;
@@ -279,8 +279,6 @@ function getAmountCollected($id){
 // export part for csv
 function getcsvreport($postdata){
     Log::info('commonhelper' ,$postdata);
-
-       
     $final_array =array();
     $fromDate=$postdata['start_date'].'00:00:00';
     $toDate=$postdata['end_date'].'23:59:59';
@@ -475,6 +473,7 @@ function getcsvreport($postdata){
    
        
         $filename = 'OrderExport'.time().'.csv';
+    
         $path = base_path().'/storage/app/'.$filename;
         $csv = fopen($path , 'w');
         fputcsv($csv, $final_array);

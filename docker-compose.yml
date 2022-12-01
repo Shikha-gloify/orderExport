@@ -1,5 +1,5 @@
 
-version: '3'
+version: '4'
 
 services:
 # Backend / PHP
@@ -7,13 +7,28 @@ services:
     image: myphpapp
     build: .
     volumes:
-      - ./public:/usr/src/phpapp/public
+      - ./:/usr/src/phpapp
       - ./storage:/usr/src/phpapp/storage
-      - ./laravel-worker:/etc/supervisor/conf.d/laravel-worker.conf
+      - ./storage/app:/usr/src/phpapp/storage/app 
+    #php -S localhost:9000 -t /usr/src/phpapp/public
+    #supervisord -c /etc/supervisor/conf.d/laravel-worker.conf
+    command: php -S localhost:9000 -t /usr/src/phpapp/public
+    #command: ./supervisor.sh
     restart: always
-    # ports:
-      # - "9000:9000"
-    network_mode: host 
+    ports:
+     - "9000:9000"
+    network_mode: host
+
+  supervisor:
+    image: customsupervisor
+    build: .
+    command: ./supervisor.sh
+    network_mode: host
+    restart: always
+    volumes:
+      - ./:/usr/src/phpapp
+      - ./laravel-worker:/etc/supervisor/conf.d
+      - ./supervisor.sh:/usr/src/phpapp
 # Redis
   redis:
     image: redis:latest

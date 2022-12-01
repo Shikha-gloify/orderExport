@@ -48,7 +48,7 @@ class Exportjob extends Job
             'path' =>  $result['path'],
             ]);
             Cache::set('job_id', $thing->idorderexport);
-            Log::info('checkreturn' .$result);
+            Log::info('checkreturn' .$result['path']);
           
         }
         catch(Exception $e){

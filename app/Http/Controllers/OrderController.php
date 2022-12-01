@@ -8,7 +8,8 @@ use App\CorporateDetails;
 use App\Jobs\Orderlistjob;
 use Routes\QueueMonitorRoutes;
 use App\TableEport;
-use Log;;
+use Log;
+use App\Helpers\CommonHelper;
 
 
 use Illuminate\Support\Facades\Cache;
@@ -103,6 +104,11 @@ class OrderController extends Controller
     }
   
     public function lisTtest(){
+
+        $result = democheck();
+        var_dump($result);
+        die;
+
         $thing = TableEport::create(
             [
             'start_date' =>'2021-11-11',
