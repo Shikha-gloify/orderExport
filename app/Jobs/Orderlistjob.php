@@ -29,9 +29,10 @@ class Orderlistjob extends Job
     public function handle()
     {
         try {
-            
+            Log::info('orderlist');
             $data = setordercache();
             Cache::set('queue_worker', $data);
+            Log::info('checkingcache', $data);
         }
         catch(Exception $e){
 

@@ -90,7 +90,7 @@ function setordercache(){
         }
     }
     //$value = Cache::set('test_data', $data);
-    
+    Log::info('datafetched',$data['0']['actual_time']);
   return $data;
 }
 

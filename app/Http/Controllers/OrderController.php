@@ -105,9 +105,9 @@ class OrderController extends Controller
   
     public function lisTtest(){
 
-        $result = democheck();
-        var_dump($result);
-        die;
+        // $result = democheck();
+        // var_dump($result);
+        // die;
 
         $thing = TableEport::create(
             [
@@ -298,3 +298,11 @@ class OrderController extends Controller
 
     //
 }
+
+
+
+
+
+
+
+

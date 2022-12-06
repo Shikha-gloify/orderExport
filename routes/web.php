@@ -13,28 +13,28 @@
 Route::get('/', function () {
     return view('welcome');
 });
-$router->get('/getorders', [
+$router->get('api/v1/getorders', [
     'as' => 'getorders', 'uses' => 'OrderController@list'
 ]);
 
-$router->get('/setCacheOrders', [
+$router->get('api/v1/setCacheOrders', [
     'as' => 'set', 'uses' => 'OrderController@setCacheData'
 ]);
 
-$router->get('/getCacheOrders', [
+$router->get('api/v1/getCacheOrders', [
     'as' => 'get', 'uses' => 'OrderController@getCacheData'
 ]);
-$router->get('/dipatchSyncJob', [
+$router->get('/api/v1/dipatchSyncJob', [
     'as' => 'get', 'uses' => 'OrderController@dipatchSyncJob'
 ]);
 
-$router->get('/lisTtest', [
+$router->get('api/v1/lisTtest', ['middleware' =>['auth'],
     'as' => 'lisTtest', 'uses' => 'OrderController@lisTtest'
 ]);
-$router->post('/getcsvdata', [
+$router->post('api/v1/getcsvdata', ['middleware' =>['auth'],
     'as' => 'getcsvdata', 'uses' => 'ExportOrder@getcsvdata'
 ]);
-$router->get('/downloadcsvfile/{ext_id}', [
+$router->get('api/v1/downloadcsvfile/{ext_id}', [
     'as' => 'downloadcsvfile', 'uses' => 'ExportOrder@downloadcsvfile'
 ]);
 

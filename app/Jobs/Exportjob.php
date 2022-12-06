@@ -39,17 +39,26 @@ class Exportjob extends Job
         try {
             
             Log::info('callfunction',$this->postdata);
-            $result = getcsvreport($this->postdata);
             $thing = TableEport::create(
             [
             'start_date' =>$this->postdata['start_date'],
             'end_date' => $this->postdata['end_date'],
             'status' =>  '0',
-            'path' =>  $result['path'],
+            'path' =>  '',
             ]);
             Cache::set('job_id', $thing->idorderexport);
-            Log::info('checkreturn' .$result['path']);
-          
+            $result = getcsvreport($this->postdata);
+            if($result['path']){
+                if (Cache::has('job_id')) {
+                    $id = Cache::get('job_id');
+                    $ext = TableEport::find($id);
+                    $ext->status = '1';
+                    $ext->path = $result['path'];
+                    $ext->update();
+                }
+                Log::info('checkreturn' .$result['path']);
+            }
+           
         }
         catch(Exception $e){
             Log::error('job_error ' . $e->getMessage());
