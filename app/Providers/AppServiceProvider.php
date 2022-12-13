@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Queue::before(function (JobProcessing $event){
             Log::info('job JobProcessing');
+            
         });
 
         Queue::after(function (JobProcessed $event){

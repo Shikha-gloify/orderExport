@@ -10,7 +10,7 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
-Route::get('/', function () {
+Route::get('api/v1/', function () {
     return view('welcome');
 });
 $router->get('api/v1/getorders', [
@@ -36,6 +36,14 @@ $router->post('api/v1/getcsvdata', ['middleware' =>['auth'],
 ]);
 $router->get('api/v1/downloadcsvfile/{ext_id}', [
     'as' => 'downloadcsvfile', 'uses' => 'ExportOrder@downloadcsvfile'
+]);
+
+$router->post('api/v1/testt', [
+    'as' => 'testt', 'uses' => 'ExportOrder@testt'
+]);
+
+$router->post('api/v1/getkioskcsv', [
+    'as' => 'testt', 'uses' => 'ExportOrder@getkioskcsv'
 ]);
 
 
