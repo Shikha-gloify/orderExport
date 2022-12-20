@@ -31,7 +31,7 @@ class ExportOrder extends Controller
             
         }
         $totalcount = 0;
-        if($postdata['role_id'] == 1){
+        if($postdata['role_id'] == 1 || $postdata['role_id'] == 2 || $postdata['role_id'] == 3 || $this->postdata['role_id'] == '4'){
 
             $totalcount = checkcountforsupervisor($postdata->all());
             Log::info('fetching_count'. $totalcount);
@@ -42,7 +42,17 @@ class ExportOrder extends Controller
             $totalcount = checkcountkiosk($postdata->all());
             Log::info('fetching_count'. $totalcount);
 
-        }else{
+        }else if($this->postdata['role_id'] == '8'){
+            Log::info('callfunctionforcorporate');
+            $totalcount = checkcountcorporate($postdata->all());
+            
+        }else if($this->postdata['role_id'] == '17'){
+            Log::info('callfunctionforsupersubscriber');
+            $totalcount = getsubscriptionordercount($postdata->all());
+            
+        } else{
+       
+        
             $totalcount = checkcount($postdata->all());
         }
         
@@ -77,10 +87,13 @@ class ExportOrder extends Controller
             'start_date'=>$data['start_date'],
             'end_date'=>$data['end_date']
         );
-        echo '<pre>'; print_r($data['role_id']); //exit;
-        $result = GetCsvmultipleroledetail($datas);
-         print_r($result); 
+         
+        $result = getcsvreportsuper($datas);
+        print_r($result); 
         die;
+        $resut1 = getcsvreportcorporate($datas);
+
+        
 
         $role_id = $data['role_id'];
         $id_employee = $data['id_employee'];
@@ -91,9 +104,6 @@ class ExportOrder extends Controller
         $dataProvider = usercorporatekioskorderssearch($id_employee,$role_id, $corporate_details,$corporate_id,$fromDate,$toDate);
 
        // echo '<pre>'; print_r($corporate_details); exit;
-
-      
-
     }
     public  function getkioskcsv(Request $postdata){
        $count =  checkcountkiosk($postdata);

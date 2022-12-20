@@ -31,7 +31,7 @@ $router->get('/api/v1/dipatchSyncJob', [
 $router->get('api/v1/lisTtest', ['middleware' =>['auth'],
     'as' => 'lisTtest', 'uses' => 'OrderController@lisTtest'
 ]);
-$router->post('api/v1/getcsvdata', ['middleware' =>['auth'],
+$router->post('api/v1/getcsvdata', [
     'as' => 'getcsvdata', 'uses' => 'ExportOrder@getcsvdata'
 ]);
 $router->get('api/v1/downloadcsvfile/{ext_id}', [

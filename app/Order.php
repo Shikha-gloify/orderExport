@@ -81,6 +81,15 @@ class Order extends Model
     {
         return $this->belongsTo('\App\PorterxAllocations', 'id_order', 'tbl_porterx_allocations_id_order');
     }
+    public function employee()
+    {
+        return $this->belongsTo('\App\Models\Employee', 'tbl_vehicle_slot_allocation.fk_tbl_vehicle_slot_allocation_id_employee', 'id_employee');
+    }
+    public function employeeporter()
+    {
+        return $this->belongsTo('\App\Models\Employee', 'tbl_porterx_allocations.tbl_porterx_allocations_id_employee', 'id_employee');
+    }
+    
     
     public function related()
     {

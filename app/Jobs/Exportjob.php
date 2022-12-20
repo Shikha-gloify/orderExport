@@ -50,7 +50,7 @@ class Exportjob extends Job
                 ]);
                 Cache::set('job_id', $thing->idorderexport);
 
-            if($this->postdata['role_id'] == '1'){
+            if($this->postdata['role_id'] == '1' || $this->postdata['role_id'] == '2'  || $this->postdata['role_id'] == '3' || $this->postdata['role_id'] == '4'){
 
                 Log::info('callfunctionforsupervisor');
                 $result = getcsvreport($this->postdata);
@@ -60,6 +60,13 @@ class Exportjob extends Job
                 Log::info('callfunctionforkiosk');
                 $result = getcsvkiosk($this->postdata);
 
+            }else if($this->postdata['role_id'] == '8'){
+                Log::info('callfunctionforcorporate');
+                $result = getcsvreportcorporate($this->postdata);
+               
+            }else if($this->postdata['role_id'] == '17'){
+                Log::info('callfunctionforsupersubscriber');
+                $result = getcsvreportsuper($this->postdata);
             }else{
                 
                 Log::info('callfunctionforother');

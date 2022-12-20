@@ -14,6 +14,6 @@ class PorterxAllocations extends Model
     protected $table = 'tbl_porterx_allocations';
     protected $primaryKey = 'tbl_porterx_allocations_id';
 
-    
+   
 
 }
